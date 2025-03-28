@@ -1,0 +1,107 @@
+{% load static %}
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commandes</title>
+    <link rel="stylesheet" href="{% static 'dashboard/css/VendComd.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>O'DJASSA</h2>
+                <p>Accès aux Vendeurs</p>
+            </div>
+            
+            <div class="sidebar-menu">
+                <a href="{% url 'commandes' %}" class="menu-item active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Commandes</span>
+                </a>
+                <a href="{% url 'produits' %}" class="menu-item">
+                    <i class="fas fa-tshirt"></i>
+                    <span>Produits</span>
+                </a>
+                <a href="{% url 'deconnexion' %}" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </div>
+    
+        <div class="main-content">
+            <div class="header">
+                <div class="search-container">
+                    <input type="text" placeholder="Rechercher..." class="search-input">
+                    <button class="search-btn"><i class="fa-solid fa-search"></i></button>
+                </div>
+            </div>
+    
+            <div class="page-title">
+                <h1>Gestion des Commandes</h1>
+                <p>Consultez et gérez les commandes de la plateforme</p>
+            </div>
+    
+            <section>
+                <h2>Liste des Commandes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Catégorie</th>
+                            <th>Taille</th>
+                            <th>Prix Unitaire</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-table-body">
+                        {% for commande in commandes %}
+                        <tr>
+                            <td class="order-details">
+                                <img src="{{ commande.produit.image.url }}" alt="Produit">
+                                {{ commande.produit.nom }}
+                            </td>
+                            <td>{{ commande.produit.categorie }}</td>
+                            <td>{{ commande.produit.taille }}</td>
+                            <td>{{ commande.produit.prix }} F</td>
+                            <td>{{ commande.quantite }}</td>
+                            <td>{{ commande.quantite | multiply:commande.produit.prix }} F</td>
+                            <td>
+                                <form action="{% url 'confirmer_commande' commande.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn-action btn-confirm" type="submit">Confirmer la commande</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7">Aucune commande à afficher.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+    
+                <div class="total-summary">
+                    <div>
+                        <strong>Total des Articles:</strong> {{ commandes|length }}
+                    </div>
+                    <div>
+                        <strong>Montant Total:</strong> {{ total_amount }} F
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

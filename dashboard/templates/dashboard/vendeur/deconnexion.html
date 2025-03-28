@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déconnexion</title>
+    <link rel="stylesheet" href="{ % static 'dashboard/css/deconnex.css' % }">
+
+</head>
+<body>
+    <h2>Êtes-vous sûr de vouloir vous déconnecter ?</h2>
+    <form action="{% url 'deconnexion' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Oui, déconnection</button>
+        <a href="{% url 'vendeur_dashboard' %}">Non, revenir au tableau de bord</a>
+    </form>
+</body>
+</html>

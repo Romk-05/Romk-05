@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord de projet Génie Log</title>
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>O'DJASSA</h2>
+                <p>Accès aux Administrateurs</p>
+            </div>
+            <div class="sidebar-menu">
+                <a href="{% url 'admin_dashboard' %}" class="menu-item active">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Accueil</span>
+                </a>
+                <a href="{% url 'vendeurs' %}" class="menu-item">
+                    <i class="fas fa-store"></i>
+                    <span>Vendeurs</span>
+                </a>
+                <a href="{% url 'paramtre' %}" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Paramètres</span>
+                </a>
+                <a href="{% url 'deconnexion' %}" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Tableau de bord</h1>
+                <div class="user-info">
+                    <div>
+                        <p>Admin</p>
+                        <small>Administrateur</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATISTIQUE DES CARTES -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">Ventes totales</div>
+                        <div class="stat-card-icon" style="background-color: var(--secondary);">
+                            <i class="fa-solid fa-franc-sign"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">45 890 Francs Cfa</div>
+                    <div class="stat-card-info">
+                        <i class="fas fa-arrow-up"></i>
+                        <span class="trend-up">12.5% depuis le mois dernier</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">Commandes</div>
+                        <div class="stat-card-icon" style="background-color: var(--success);">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">723</div>
+                    <div class="stat-card-info">
+                        <i class="fas fa-arrow-up"></i>
+                        <span class="trend-up">8.3% depuis le mois dernier</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">Acheteurs</div>
+                        <div class="stat-card-icon" style="background-color: var(--warning);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">1 285</div>
+                    <div class="stat-card-info">
+                        <i class="fas fa-arrow-up"></i>
+                        <span class="trend-up">5.7% depuis le mois dernier</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">Vendeurs</div>
+                        <div class="stat-card-icon" style="background-color: var(--danger);">
+                            <i class="fas fa-store"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">42</div>
+                    <div class="stat-card-info">
+                        <i class="fas fa-arrow-up"></i>
+                        <span class="trend-up">2.4% depuis le mois dernier</span>
+                    </div>
+                </div>
+            </div>
+
+            
+        <!-- SECTION PRODUIT -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Gestion des produits</h2>
+            </div>
+            <div class="product-categories">
+                <div class="category-badge active">Tous</div>
+                <div class="category-badge">Homme</div>
+                <div class="category-badge">Femme</div>
+                <div class="category-badge">Enfant</div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Prix</th>
+                        <th>Quantité en Stock</th>
+                        <th>Vendeur</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#PRD-1234</td>
+                        <td>T-shirt manches courtes</td>
+                        <td>coton,</td>
+                        <td>200000 Francs cfa</td>
+                        <td>124</td>
+                        <td>ModaStyle</td>
+                        <td><button>Modifier</button> <button>Supprimer</button></td>
+                    </tr>
+                    <tr>
+                        <td>#PRD-1234</td>
+                        <td>T-shirt manches courtes</td>
+                        <td>coton,</td>
+                        <td>200000 Francs cfa</td>
+                        <td>124</td>
+                        <td>ModaStyle</td>
+                        <td><button>Modifier</button> <button>Supprimer</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Vendors Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Liste des Vendeurs</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>Marie Curie</td>
+                        <td>marie.curie@example.com</td>
+                        <td>En attente</td>
+                        <td><button>Valider</button> <button>Supprimer</button></td>
+                    </tr>
+                    <tr>
+                        <td>001</td>
+                        <td>Marie Curie</td>
+                        <td>marie.curie@example.com</td>
+                        <td>En attente</td>
+                        <td><button>Valider</button> <button>Supprimer</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+    
+</body>
+</html>

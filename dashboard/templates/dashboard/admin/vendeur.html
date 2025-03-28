@@ -1,0 +1,93 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Vendeurs</title>
+    <link rel="stylesheet" href="{% static 'dashboard/css/venAdm.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>O'DJASSA</h2>
+                <p>Accès aux Administrateurs</p>
+            </div>
+            <div class="sidebar-menu">
+                <a href="{% url 'admin_dashboard' %}" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Accueil</span>
+                </a>
+                <a href="{% url 'vendeurs' %}" class="menu-item active">
+                    <i class="fas fa-store"></i>
+                    <span>Vendeurs</span>
+                </a>
+                <a href="{% url 'paramtre' %}" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Paramètres</span>
+                </a>
+                <a href="{% url 'deconnexion' %}" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <header>
+                <input type="text" placeholder="Rechercher...">
+            </header>
+            <div class="content">
+                <h2>Gestion des Vendeurs</h2>
+                <div class="filter-tabs">
+                    <button class="active">Tous</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom Produit</th>
+                            <th>Quantité</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for commande in commandes %}
+                        <tr>
+                            <td>{{ commande.id }}</td>
+                            <td>{{ commande.produit.nom }}</td>
+                            <td>{{ commande.quantite }}</td>
+                            <td>{{ commande.quantite|multiply:commande.produit.prix }} Francs CFA</td>
+                            <td>
+                                <span class="status {% if commande.confirme %}confirmed{% else %}pending{% endif %}">
+                                    {% if commande.confirme %} Confirmée {% else %} En cours {% endif %}
+                                </span>
+                            </td>
+                            <td>{{ commande.date_commande|date:"d M Y" }}</td>
+                            <td>
+                                {% if not commande.confirme %}
+                                <form action="{% url 'confirmer_commande' commande.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-action">Confirmer</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7">Aucune commande à afficher.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
